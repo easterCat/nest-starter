@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>注册</title>
+    {{> meta}}
+</head>
+
+<body>
+    <div class="layui-layout layui-layout-admin">
+        <div class="bg-white">
+            <div class="container">
+                <div class="row justify-content-center align-items-center d-flex vh-100">
+                    <div class="col-md-4 mx-auto">
+                        <div class="osahan-login py-4">
+                            <div class="text-center mb-4">
+                                <a href="/register"><img src="/public/img/fav.png" alt="" /></a>
+                                <h5 class="font-weight-bold mt-3">注册账号</h5>
+                                <p class="text-muted">
+                                    记录你
+                                </p>
+                            </div>
+                            <form>
+                                <div class="form-group">
+                                    <label class="mb-1">账号</label>
+                                    <div class="position-relative icon-form-control">
+                                        <i class="feather-user position-absolute"></i>
+                                        <input type="text" class="form-control" name="account" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="mb-1">邮箱</label>
+                                    <div class="position-relative icon-form-control">
+                                        <i class="feather-at-sign position-absolute"></i>
+                                        <input type="email" class="form-control" name="email" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="mb-1">密码 (6个以上数字字母组合)</label>
+                                    <div class="position-relative icon-form-control">
+                                        <i class="feather-unlock position-absolute"></i>
+                                        <input type="password" class="form-control" name="password" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="mb-1">确认密码 (6个以上数字字母组合)</label>
+                                    <div class="position-relative icon-form-control">
+                                        <i class="feather-unlock position-absolute"></i>
+                                        <input type="password" class="form-control" name="confirm" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="mb-1">是否同意我们使用Cookie政策。</label>
+                                </div>
+                                <button class="btn btn-primary btn-block text-uppercase">
+                                    同意并注册
+                                </button>
+                                <div class="text-center mt-3 border-bottom pb-3">
+                                    <p class="small text-muted">第三方登录</p>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <button type="button" class="btn btn-sm btn-outline-github btn-block">
+                                                <i class="feather-facebook"></i> Github
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="py-3 d-flex align-item-center">
+                                    <a href="forgot-password.html">忘记密码</a>
+                                    <span class="ml-auto">
+                                        已有账号?
+                                        <a class="font-weight-bold" href="/login">登录</a></span>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{> script}}
+    <script>
+        init();
+
+        function init() {
+            githubLogin();
+            initForm();
+        }
+
+        function githubLogin() {
+            $(".btn-outline-github").click(function () {
+                var CLIENT_ID = "Iv1.59ce08097886630e";
+                var REDIRECT_URL = "e0272412365d8f63e5468c78a3306e1b2fb8da33";
+                var url = "https://github.com/login/oauth/authorize?client_id=" + CLIENT_ID + `&client_secret=${REDIRECT_URL}`;
+                window.location.href = url;
+            })
+        }
+
+        function initForm() {
+            layui.use('layer', function () {
+                var layer = layui.layer; //独立版的layer无需执行这一句
+                var forms = $(".text-uppercase").click(function (e) {
+                    e.preventDefault();
+
+                    axios({
+                        method: 'post',
+                        url: '/api/user/register',
+                        data: {
+                            account: $("input[name='account']").get(0).value,
+                            password: $("input[name='password']").get(0).value,
+                        },
+                    }).then(function (response) {
+                        layer.msg('注册成功');
+                        location.href = "/login"
+                    }).catch(function (error) {
+                        layer.msg("注册失败");
+                    });
+                })
+            })
+        }
+    </script>
+
+</html>

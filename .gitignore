@@ -1,8 +1,23 @@
-node_modules/
-node_modules
-dist/
-dist
-.history/
-.history
-.idea/
-.idea
+# dependencies
+/node_modules
+
+# IDE
+/.idea
+/.awcache
+/.vscode
+/.history
+
+# misc
+npm-debug.log
+tutorial.sqlite
+
+# example
+/quick-start
+
+# tests
+/test
+/coverage
+/.nyc_output
+
+# dist
+/dist

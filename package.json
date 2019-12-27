@@ -8,7 +8,7 @@
     "prebuild": "rimraf dist",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "dev": "nodemon --watch ./src -e ts,tsx --exec nest start",
+    "dev": "export NODE_ENV=development && nodemon",
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
@@ -18,12 +18,14 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "webpack": "webpack --config webpack.config.js"
   },
   "dependencies": {
     "@nestjs/common": "^6.7.2",
     "@nestjs/core": "^6.7.2",
     "@nestjs/platform-express": "^6.10.12",
+    "hbs": "^4.0.6",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.0",
     "rxjs": "^6.5.3"
@@ -42,11 +44,14 @@
     "prettier": "^1.18.2",
     "supertest": "^4.0.2",
     "ts-jest": "^24.1.0",
-    "ts-loader": "^6.1.1",
+    "ts-loader": "^6.2.1",
     "ts-node": "^8.4.1",
     "tsconfig-paths": "^3.9.0",
     "tslint": "^5.20.0",
-    "typescript": "^3.6.3"
+    "typescript": "^3.6.3",
+    "webpack": "^4.41.4",
+    "webpack-cli": "^3.3.10",
+    "webpack-node-externals": "^1.7.2"
   },
   "jest": {
     "moduleFileExtensions": [
