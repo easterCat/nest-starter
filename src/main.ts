@@ -4,12 +4,23 @@ import { AppModule } from './app.module';
 import { blue } from 'colors';
 import { join } from 'path';
 import { registerPartials } from 'hbs';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 declare const module: any;
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   addEngine(app);
+
+  const options = new DocumentBuilder()
+    .setTitle('平头哥')
+    .setDescription('后端API接口文档')
+    .setVersion('1.0')
+    .addTag('nestjs')
+    .build();
+
+  const document = SwaggerModule.createDocument(app, options);
+  SwaggerModule.setup('swagger', app, document);
 
   const port = 6333;
   await app.listen(port, () => {
